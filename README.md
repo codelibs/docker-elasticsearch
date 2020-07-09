@@ -15,6 +15,12 @@ Elasticsearch for single node:
 $ docker-compose -f docker-compose.yml up -d
 ```
 
+Elasticsearch and Kibana:
+
+```
+$ docker-compose -f docker-compose.yml -f docker-compose.kibana.yml up -d
+```
+
 Elasticsearch cluster:
 
 ```
