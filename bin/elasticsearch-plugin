@@ -1,0 +1,59 @@
+#!/bin/bash
+
+PROGNAME=$(basename $0)
+cd `dirname $0`/..
+BASE_DIR=`pwd`
+
+
+usage() {
+    echo "Usage: $PROGNAME [ACTION] TARGET"
+    echo
+    echo "Options:"
+    echo "  install  Install a plugin."
+    echo "  remove   Remove an installed plugin."
+    echo
+    exit 1
+}
+
+if [ x"$1" = xinstall ] ; then
+  if [ x"$2" = x ] ;then
+    echo "No plugin name."
+    exit 1
+  fi
+  plugin_name=$2
+  plugin_dir=${BASE_DIR}/elasticsearch/plugins/${plugin_name}
+  if [ -d ${plugin_dir} ] ; then
+    echo "${plugin_name} has been installed."
+    exit 1
+  fi
+  es_version=`grep image: $BASE_DIR/docker-compose.yml | sed -e "s/.*://"`
+  plugin_url=https://artifacts.elastic.co/downloads/elasticsearch-plugins/${plugin_name}/${plugin_name}-${es_version}.zip
+  tmp_file=/tmp/es-plugin.$$
+  curl -s -o ${tmp_file} ${plugin_url}
+  if [ $? != 0 ] ; then
+    echo "Failed to download ${plugin_url}"
+    exit 1
+  fi
+  mkdir -p ${plugin_dir}
+  if [ $? != 0 ] ; then
+    echo "Failed to create ${plugin_dir}"
+    exit 1
+  fi
+  cd ${plugin_dir}
+  unzip $tmp_file
+  rm $tmp_file
+elif [ x"$1" = xremove ] ; then
+  if [ x"$2" = x ] ;then
+    echo "No plugin name."
+    exit 1
+  fi
+  plugin_name=$2
+  plugin_dir=${BASE_DIR}/elasticsearch/plugins/${plugin_name}
+  if [ ! -d ${plugin_dir} ] ; then
+    echo "${plugin_name} is not found."
+    exit 1
+  fi
+  rm -rf ${plugin_dir}
+else
+  usage
+fi

@@ -1,0 +1,51 @@
+version: "3.2"
+services:
+  es01:
+    image: docker.elastic.co/elasticsearch/elasticsearch:7.8.0
+    container_name: es01
+    environment:
+      - node.name=es01
+      - discovery.seed_hosts=es01
+      - cluster.initial_master_nodes=es01
+      - cluster.name=codelibs-es
+      - bootstrap.memory_lock=true
+      - "ES_JAVA_OPTS=-Xms4g -Xmx4g"
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+      nofile:
+        soft: 65535
+        hard: 65535
+    volumes:
+      - type: bind
+        source: ./elasticsearch/plugins
+        target: /usr/share/elasticsearch/plugins
+#      - type: bind
+#        source: ./elasticsearch/data01
+      - type: volume
+        source: esdata01
+        target: /usr/share/elasticsearch/data
+        volume:
+          nocopy: true
+    ports:
+      - target: 9200
+        published: 9200
+        protocol: tcp
+        mode: host
+    networks:
+      - esnet
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "5"
+
+volumes:
+  esdata01:
+    driver: local
+
+networks:
+  esnet:
+    driver: bridge
+
