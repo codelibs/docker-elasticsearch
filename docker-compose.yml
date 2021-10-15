@@ -1,7 +1,7 @@
 version: "3.2"
 services:
   es01:
-    image: docker.elastic.co/elasticsearch/elasticsearch:7.14.1
+    image: docker.elastic.co/elasticsearch/elasticsearch:7.15.0
     container_name: es01
     environment:
       - node.name=es01
@@ -26,8 +26,6 @@ services:
       - type: volume
         source: esdata01
         target: /usr/share/elasticsearch/data
-        volume:
-          nocopy: true
     ports:
       - target: 9200
         published: 9200
