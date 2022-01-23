@@ -1,7 +1,7 @@
 version: "3.2"
 services:
   es01:
-    image: docker.elastic.co/elasticsearch/elasticsearch:7.16.2
+    image: docker.elastic.co/elasticsearch/elasticsearch:7.16.3
     container_name: es01
     environment:
       - node.name=es01
@@ -10,7 +10,7 @@ services:
       - cluster.name=codelibs-es
       - bootstrap.memory_lock=true
       - node.roles=master
-      - "ES_JAVA_OPTS=-Xms1g -Xmx1g"
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
     ulimits:
       memlock:
         soft: -1
@@ -49,7 +49,7 @@ services:
       - cluster.name=codelibs-es
       - bootstrap.memory_lock=true
       - node.roles=master
-      - "ES_JAVA_OPTS=-Xms1g -Xmx1g"
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
     ulimits:
       memlock:
         soft: -1
