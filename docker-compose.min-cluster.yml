@@ -10,6 +10,7 @@ services:
       - cluster.name=codelibs-es
       - bootstrap.memory_lock=true
       - node.roles=master
+      - xpack.security.enabled=false
       - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
     ulimits:
       memlock:
@@ -40,7 +41,7 @@ services:
         max-size: "10m"
         max-file: "5"
   es02:
-    image: docker.elastic.co/elasticsearch/elasticsearch:7.16.2
+    image: docker.elastic.co/elasticsearch/elasticsearch:8.0.1
     container_name: es02
     environment:
       - node.name=es02
@@ -49,6 +50,7 @@ services:
       - cluster.name=codelibs-es
       - bootstrap.memory_lock=true
       - node.roles=master
+      - xpack.security.enabled=false
       - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
     ulimits:
       memlock:
@@ -81,7 +83,7 @@ services:
     depends_on:
       - es01
   es03:
-    image: docker.elastic.co/elasticsearch/elasticsearch:7.16.2
+    image: docker.elastic.co/elasticsearch/elasticsearch:8.0.1
     container_name: es03
     environment:
       - node.name=es03
@@ -90,6 +92,7 @@ services:
       - cluster.name=codelibs-es
       - bootstrap.memory_lock=true
       - node.roles=master,voting_only,data
+      - xpack.security.enabled=false
       - "ES_JAVA_OPTS=-Xms4g -Xmx4g"
     ulimits:
       memlock:
@@ -123,7 +126,7 @@ services:
       - es01
       - es02
   es04:
-    image: docker.elastic.co/elasticsearch/elasticsearch:7.16.2
+    image: docker.elastic.co/elasticsearch/elasticsearch:8.0.1
     container_name: es04
     environment:
       - node.name=es04
@@ -132,6 +135,7 @@ services:
       - cluster.name=codelibs-es
       - bootstrap.memory_lock=true
       - node.roles=master,voting_only,data
+      - xpack.security.enabled=false
       - "ES_JAVA_OPTS=-Xms4g -Xmx4g"
     ulimits:
       memlock:
