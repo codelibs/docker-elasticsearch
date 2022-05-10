@@ -16,37 +16,37 @@ Elasticsearch needs to set vm.max_map_count to at least 262144. See [Install Ela
 Elasticsearch for single node (localhost:9200):
 
 ```
-$ docker-compose -f docker-compose.yml up -d
+$ docker compose -f compose.yaml up -d
 ```
 
 Elasticsearch and Kibana (localhost:5601):
 
 ```
-$ docker-compose -f docker-compose.yml -f docker-compose.kibana.yml up -d
+$ docker compose -f compose.yaml -f compose-kibana.yaml up -d
 ```
 
 Elasticsearch cluster:
 
 ```
-$ docker-compose -f docker-compose.yml -f docker-compose.cluster.yml up -d
+$ docker compose -f compose-cluster.yaml up -d
 ```
 
 Elasticsearch cluster and Kibana:
 
 ```
-$ docker-compose -f docker-compose.yml -f docker-compose.cluster.yml -f docker-compose.kibana.yml up -d
+$ docker compose -f compose-cluster.yaml -f compose-kibana.yaml up -d
 ```
 
 ### Stop Fess
 
 ```
-$ docker-compose -f docker-compose.yml -f ...(snip)... down
+$ docker compose -f compose.yaml -f ...(snip)... down
 
 ```
 
 ### Remove Local Volumes
 
 ```
-$ docker volume rm compose_esdata01 compose_esdata02
+$ docker volume prune
 
 ```

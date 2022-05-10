@@ -1,4 +1,3 @@
-version: "3.2"
 services:
   es01:
     image: docker.elastic.co/elasticsearch/elasticsearch:8.0.1
@@ -28,10 +27,7 @@ services:
         source: esdata01
         target: /usr/share/elasticsearch/data
     ports:
-      - target: 9200
-        published: 9200
-        protocol: tcp
-        mode: host
+      - 9200:9200
     networks:
       - esnet
     logging:
